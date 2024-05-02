@@ -1,0 +1,100 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+//const response = await fetch('https://localhost:5000/employee');
+//const data = await response.json();
+//const randomUser = data.employee_list[0];
+const fn = "Nombres"
+
+---
+<Layout title="Profile">
+    <main>
+        <h1><span class="text-gradient">Employee Profile</span></h1>
+        <form method="POST" class="form-container">
+            <div class="column">
+                <label>
+                  First Name:
+                  <input type="text" name="firstName" id="firstName" value={fn} required />
+                </label>
+                <label>
+                  Last Name:
+                  <input type="text" name="lastName" id="lastName" value={fn} required />
+                </label>
+                <label>
+                  Email:
+                  <input type="email" name="email" id="email" value={fn} required />
+                </label>
+                <label>
+                  Phone Number:
+                  <input type="text" name="phoneNumber" id="phoneNumber" value={fn} required />
+                </label>
+                <label>
+                  Personal ID:
+                  <input type="text" name="personalID" id="personalID" value={fn} required />
+                </label>
+                <label>
+                  Address:
+                  <input type="text" name="address" id="address" value={fn} required />
+                </label>
+                <label>
+                  Date of Hire:
+                  <input type="text" name="dateofHire" id="dateofHire" value={fn} required />
+                </label>
+                <label>
+                  Job Title:
+                  <input type="text" name="jobTitle" id="jobTitle" value={fn} required />
+                </label>
+              </div>
+            <div class="button-row">
+              <button>Enviar</button>
+            </div>
+        </form>
+    </main>
+</Layout>
+<style>
+    main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+    h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+    label {
+        margin-bottom: 15px; /* Ajusta el espacio entre los labels */
+    }
+    input {
+        padding: 10px; /* Ajusta el padding de los inputs */
+        margin-bottom: 15px; /* Ajusta el espacio entre los inputs */
+        width: 100%; /* Ajusta el ancho de los inputs */
+        box-sizing: border-box; /* Incluye el padding en el ancho del input */
+        border-radius: 5px; /* Redondea las esquinas del input */
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+    }
+    .button-row {
+        display: block;
+    }
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+</style>

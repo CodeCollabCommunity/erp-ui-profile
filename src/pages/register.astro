@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+if (Astro.request.method === "POST") {
+  try {
+    var user: any = {};
+    const data = await Astro.request.formData();
+    data.forEach((value, key) => user[key] = value);
+    fetch("https://localhost:5000/employee", {
+      method: "POST",
+      body: JSON.stringify(user),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }).then((response) => response.json())
+      .then((json) => console.log(json));
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+<Layout title="Employee Register">
+  <main>
+    <h1><span class="text-gradient">Employee Register</span></h1>
+    <form method="POST" class="form-container">
+        <div class="column">
+          <label>
+            First Name:
+            <input type="text" name="firstName" required />
+          </label>
+          <label>
+            Last Name:
+            <input type="text" name="lastName" required />
+          </label>
+          <label>
+            Email:
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Phone Number:
+            <input type="text" name="phoneNumber" required />
+          </label>
+          <label>
+            Personal ID:
+            <input type="text" name="personalID" required />
+          </label>
+          <label>
+            Address:
+            <input type="text" name="address" required />
+          </label>
+          <label>
+            Date of Hire:
+            <input type="text" name="dateofHire" required />
+          </label>
+          <label>
+            Job Title:
+            <input type="text" name="jobTitle" required />
+          </label>
+        </div>
+      <div class="button-row">
+        <button>Enviar</button>
+      </div>
+    </form>
+  </main>
+</Layout>
+<style>
+  main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+  h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+  label {
+    margin-bottom: 15px; /* Ajusta el espacio entre los labels */
+  }
+  input {
+    padding: 10px; /* Ajusta el padding de los inputs */
+    margin-bottom: 15px; /* Ajusta el espacio entre los inputs */
+    width: 100%; /* Ajusta el ancho de los inputs */
+    box-sizing: border-box; /* Incluye el padding en el ancho del input */
+    border-radius: 5px; /* Redondea las esquinas del input */
+  }
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+  .button-row {
+    display: block;
+  }
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+  }
+</style>
