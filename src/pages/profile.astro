@@ -1,56 +1,111 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-//const response = await fetch('https://localhost:5000/employee');
-//const data = await response.json();
-//const randomUser = data.employee_list[0];
-const fn = "Nombres"
-
 ---
 <Layout title="Profile">
     <main>
         <h1><span class="text-gradient">Employee Profile</span></h1>
-        <form method="POST" class="form-container">
+        <form id="profileForm" class="form-container">
             <div class="column">
                 <label>
                   First Name:
-                  <input type="text" name="firstName" id="firstName" value={fn} required />
+                  <input type="text" name="firstName" id="firstName" required />
                 </label>
                 <label>
                   Last Name:
-                  <input type="text" name="lastName" id="lastName" value={fn} required />
+                  <input type="text" name="lastName" id="lastName" required />
                 </label>
                 <label>
                   Email:
-                  <input type="email" name="email" id="email" value={fn} required />
+                  <input type="email" name="email" id="email" required />
                 </label>
                 <label>
                   Phone Number:
-                  <input type="text" name="phoneNumber" id="phoneNumber" value={fn} required />
+                  <input type="text" name="phoneNumber" id="phoneNumber" required />
                 </label>
                 <label>
                   Personal ID:
-                  <input type="text" name="personalID" id="personalID" value={fn} required />
+                  <input type="text" name="personalID" id="personalID" required />
                 </label>
                 <label>
                   Address:
-                  <input type="text" name="address" id="address" value={fn} required />
+                  <input type="text" name="address" id="address" required />
                 </label>
                 <label>
                   Date of Hire:
-                  <input type="text" name="dateofHire" id="dateofHire" value={fn} required />
+                  <input type="text" name="dateofHire" id="dateofHire" required />
                 </label>
                 <label>
                   Job Title:
-                  <input type="text" name="jobTitle" id="jobTitle" value={fn} required />
+                  <input type="text" name="jobTitle" id="jobTitle" required />
                 </label>
               </div>
             <div class="button-row">
-              <button>Enviar</button>
+              <button type="submit">Enviar</button>
             </div>
         </form>
     </main>
 </Layout>
+<script>
+  // ---------------------------- Get user data ----------------------------
+  let url = "http://localhost:5000/employee";
+  let options = {
+    method: "GET",
+    headers: {
+      "idUser": "ea9e30c320"
+    }
+  }
+  function updateInputFields() {
+    // Actualizar los campos de entrada con los valores de userData
+    document.getElementById('firstName').value = userData.data.firstName || '';
+    document.getElementById('lastName').value = userData.data.lastName || '';
+    document.getElementById('email').value = userData.data.email || '';
+    document.getElementById('phoneNumber').value = userData.data.phoneNumber || '';
+    document.getElementById('personalID').value = userData.data.personalID || '';
+    document.getElementById('address').value = userData.data.address || '';
+    document.getElementById('dateofHire').value = userData.data.dateofHire || '';
+    document.getElementById('jobTitle').value = userData.data.jobTitle || '';
+  }
+
+  var userData = {};
+
+  fetch(url, options)
+  .then(response => response.json())
+  .then(json => {
+    userData = json;
+    updateInputFields(); // Llamar a la función para actualizar los campos después de obtener userData
+  })
+  .catch(err => console.warn(err.message));
+
+  // ---------------------------- Update user data ----------------------------
+  document.getElementById('profileForm').addEventListener('submit', async function(event) {
+  event.preventDefault(); // Previene el envío del formulario por defecto
+  // Construye el objeto de usuario a partir de los datos del formulario
+  const user = {
+    firstName: document.getElementById('firstName').value,
+    lastName: document.getElementById('lastName').value,
+    email: document.getElementById('email').value,
+    phoneNumber: document.getElementById('phoneNumber').value,
+    personalID: document.getElementById('personalID').value,
+    address: document.getElementById('address').value,
+    dateofHire: document.getElementById('dateofHire').value,
+    jobTitle: document.getElementById('jobTitle').value
+  };
+  // Envia la solicitud PUT usando fetch
+  let options = {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      "idUser": "ea9e30c320"
+    },
+    body: JSON.stringify(user)
+  };
+  fetch(url, options)
+  .then((response) => response.json())
+  .then((json) => console.log(json))
+  .catch(err => console.warn(err.message));
+  });
+</script>
+
 <style>
     main {
 		margin: auto;
